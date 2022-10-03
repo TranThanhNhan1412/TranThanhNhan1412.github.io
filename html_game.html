@@ -24,58 +24,42 @@
     </style>
 </head>
 
-<body onload="startGame()">
+<body onload="restart2()">
     <div class="container-fluid">
         <h2>Let started!</h2>
         <canvas id="game_area"></canvas>
         <button class="controler_btn" onclick="moveup()">UP</button>
         <button class="controler_btn" onclick="movedown()">DOWN</button>
         <button class="controler_btn" id="stop_btn" onclick="stop_move()">STOP</button>
-        <button class="controler_btn" onclick="continue_moving()">CONTINUE</button>
+        <button class="controler_btn" id="continue_btn" onclick="continue_moving()">CONTINUE</button>
         <button id="restart_btn" onclick="restart()">RESTART</button>
+        <button id="start_btn" onclick="restart()">START</button>
 
+        /*
+        - Hiển thị score
+        - concat piece and obstacle
+        */
     </div>
-
     <script>
-
+        function getRndInteger(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
     </script>
     <script src="./script/game_area.js"></script>
     <script src="./script/obstacle.js"></script>
+    <script src="./script/piece.js"></script>
+
+
+ 
+
 
     <script>
-        var piece;
-        var piece_length = 30;
-        var piece_x_init = 10;
-        function startGame() {
-            game_area.start();
-            piece = new piece_component(piece_length, piece_length, piece_x_init, 120);
-            piece.update();
+        game_area.start();
 
+        function restart2() {
+            game_area.update_score(game_area.score);
+            create_obstacle()
         }
-        function stop_move() {
-            piece.speed_x = 0;
-            piece.speed_y = 0;
-            game_area.stop();
-        }
-
-        function restart() {
-            game_area.moving()
-            piece = new piece_component(piece_length, piece_length, piece_x_init, 120);
-            document.querySelectorAll('.controler_btn').forEach(elem => {
-                elem.disabled = false;
-            });
-        }
-
-        function continue_moving() {
-            game_area.moving()
-        }
-        function moveup() {
-            piece.y -= piece_length / 2;
-        }
-        function movedown() {
-            piece.y += piece_length / 2;
-        }
-
 
     </script>
 </body>

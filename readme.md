@@ -4,3 +4,6 @@
 ## Mục tiêu: 03/10/2022
 - Học canvas HTML, HTML Game
 - Học javascript
+
+## Try it:
+- https://tranthanhnhan1412.github.io/html_game.html
