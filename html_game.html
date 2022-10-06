@@ -33,11 +33,10 @@
         <button class="controler_btn" id="stop_btn" onclick="stop_move()">STOP</button>
         <button class="controler_btn" id="continue_btn" onclick="continue_moving()">CONTINUE</button>
         <button id="restart_btn" onclick="restart()">RESTART</button>
-        <button id="start_btn" onclick="restart()">START</button>
 
         /*
-        - Hiển thị score
-        - concat piece and obstacle
+        - xử lý đụng độ
+        - controller
         */
     </div>
     <script>
@@ -46,19 +45,19 @@
         }
     </script>
     <script src="./script/game_area.js"></script>
-    <script src="./script/obstacle.js"></script>
     <script src="./script/piece.js"></script>
+    <script src="./script/obstacle.js"></script>
+    <script src="./script/controler.js"></script>
 
 
- 
 
 
     <script>
-        game_area.start();
 
         function restart2() {
-            game_area.update_score(game_area.score);
-            create_obstacle()
+            game_area.create();
+            start()
+
         }
 
     </script>
