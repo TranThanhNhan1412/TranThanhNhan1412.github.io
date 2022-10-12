@@ -1,9 +1,9 @@
 
 
-var game_area_width = 1000;
+var game_area_width = 600;
 var game_area_height = 300;
 var game_area = {
-    score:0,
+    score: 0,
     canvas: document.getElementById("game_area"),
     create: function () {
         this.canvas.width = game_area_width;
@@ -25,13 +25,14 @@ var game_area = {
         this.context.fillText("STOP!", game_area_width / 2, game_area_height / 2);
     },
     update_score: function () {
-        this.context.fillStyle = '#f1f1f1';
+        this.context.fillStyle = '#abeeee';
         this.context.fillRect(0, 0, 100, 20);
         this.context.font = "15px Arial";
         this.context.fillStyle = 'rgba(255, 5, 5, 1)';
         this.context.fillText("Score: " + this.score, 30, 15);
     },
     show_dead_screen: function () {
+        sound_die.play()
         this.clear_all_subcontext()
         this.context.fillStyle = 'rgba(255, 5, 5, 1)';
         this.context.font = "50px Arial";
@@ -42,4 +43,5 @@ var game_area = {
     }
 
 }
+
 

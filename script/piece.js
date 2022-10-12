@@ -1,10 +1,10 @@
 var piece;
 var piece_length = 30;
 var piece_x_init = 40;
-var boost_speed = 50
+var gravity = 2;
 function moving_piece() {
     piece.del_old_position();
-    piece.speed_up(boost_speed/10);
+    piece.falling(gravity);
     piece.update();
 }
 
@@ -18,26 +18,33 @@ function Piece(width, height, x, y) {
         this.interval = setInterval(moving_piece, 100);
     }
     this.update = function () {
-        ctx = game_area.context;
-        ctx.fillStyle = `rgba(255, 5, 5, ${getRndInteger(5, 10) / 10})`;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
-
-
+        if (is_outside(piece.x, piece.y)) {
+            this.die()
+        } else {
+            ctx = game_area.context;
+            ctx.fillStyle = `rgba(255, 5, 5, ${getRndInteger(5, 10) / 10})`;
+            ctx.fillRect(this.x, this.y, this.width, this.height);
+        }
     }
     this.del_old_position = function () {
-        game_area.context.clearRect(this.x, this.y-this.height /2, this.width, this.height*2.5);
-
+        game_area.context.clearRect(this.x, this.y, this.width, this.height);
     }
-    this.speed_up = function (speed = 0.05) {
-        this.x += speed;
+    this.falling = function (gravity = 0.05) {
+        this.y += gravity;
+    }
+    this.die = () => {
+        clearInterval(piece.interval)
+        clearInterval(create_obstacle_interval)
+        stop_all_obstacle()
+        game_area.show_dead_screen();
+
     }
 }
 
 function is_outside(x, y) {
     var flag = false
-    var padding_area = piece_length + piece_x_init
-    var dead_zone_x = [0, game_area_width - padding_area];
-    var dead_zone_y = [padding_area, game_area_height - padding_area];
+    var dead_zone_x = [0, game_area_width - (piece_length + piece_x_init)];
+    var dead_zone_y = [piece_length, game_area_height - piece_length];
     if (x <= dead_zone_x[0] | x >= dead_zone_x[1]) {
         flag = true
     }

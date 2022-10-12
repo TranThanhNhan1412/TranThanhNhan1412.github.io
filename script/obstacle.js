@@ -4,7 +4,7 @@ const space_2_obstacle = 120;
 const obstacle_interval = {}
 var num_obstacle = 0
 var stop_create = false
-var create_obstacle_interval = setInterval(create_obstacle, 3* 1000);
+var create_obstacle_interval = setInterval(create_obstacle, 3 * 1000);
 
 function create_obstacle() {
     let obstacle = new Obstacle(game_area_width, "obstacle " + num_obstacle.toString())
@@ -31,6 +31,7 @@ function continue_obstacle() {
     }
 }
 
+
 function Obstacle(start_x = game_area_width, name = '') {
     this.width = 10;
     this.height_upper = getRndInteger(50, 150)
@@ -44,15 +45,12 @@ function Obstacle(start_x = game_area_width, name = '') {
         ctx = game_area.context;
         ctx.fillStyle = obstacle_color;
         if (this.is_over == false & this.x <= piece.x + piece.width) {
-            if (is_outside(piece.x, piece.y) | is_conflict(this)) {
+            if (is_conflict(this)) {
                 stop_create = true
-                clearInterval(piece.interval)
-                stop_all_obstacle()
-                clearInterval(create_obstacle_interval)
-                this.is_over == 1
-                game_area.show_dead_screen();
+                piece.die()
             }
             else {
+                piece.del_old_position()
                 game_area.score += 1
                 this.is_over = true
             }
@@ -81,7 +79,7 @@ function Obstacle(start_x = game_area_width, name = '') {
 function is_conflict(obstacle) {
     var flag = false
     var is_upper_conflict = Boolean(piece.y <= obstacle.height_upper)
-    var is_lower_conflict = Boolean(piece.y-piece.width >= obstacle.y_lower)
+    var is_lower_conflict = Boolean(piece.y - piece.width >= obstacle.y_lower)
     if (is_upper_conflict | is_lower_conflict) {
         flag = true
     }
