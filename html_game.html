@@ -19,15 +19,17 @@
         canvas {
             display: block;
             border: 1px solid #d3d3d3;
-            background-color: #f1f1f1;
+            background-color: #abeeee;
         }
     </style>
 </head>
 
-<body onload="restart2()">
+<body onload="start()">
     <div class="container-fluid">
         <h2>Let started!</h2>
         <canvas id="game_area"></canvas>
+        <button class="controler_btn" onclick="moveleft()">LEFT</button>
+        <button class="controler_btn" onclick="moveright()">RIGHT</button>
         <button class="controler_btn" onclick="moveup()">UP</button>
         <button class="controler_btn" onclick="movedown()">DOWN</button>
         <button class="controler_btn" id="stop_btn" onclick="stop_move()">STOP</button>
@@ -40,6 +42,26 @@
         */
     </div>
     <script>
+
+
+        var sound_die = new sound_confict("./asset/sound/conflict.mp3")
+        var sound_fly = new sound_confict("./asset/sound/fly.mp3")
+
+        function sound_confict(src) {
+            this.sound = document.createElement("audio");
+            this.sound.src = src;
+            this.sound.setAttribute("preload", "auto");
+            this.sound.setAttribute("controls", "none");
+            this.sound.style.display = "none";
+            document.body.appendChild(this.sound);
+            this.play = function () {
+                this.sound.play();
+            }
+            this.stop = function () {
+                this.sound.pause();
+            }
+        }
+
         function getRndInteger(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
@@ -49,18 +71,17 @@
     <script src="./script/obstacle.js"></script>
     <script src="./script/controler.js"></script>
 
-
-
-
     <script>
-
-        function restart2() {
-            game_area.create();
-            start()
-
-        }
-
+        window.addEventListener('keydown', function (e) {
+            movedown()
+        })
+        window.addEventListener('keyup', function (e) {
+            moveup()
+        })
     </script>
+
+
+
 </body>
 
 </html>
